@@ -1,0 +1,54 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+venv
+.venv
+.uv
+
+# Backend build artifacts
+backend/.venv/
+backend/__pycache__/
+backend/*.egg-info/
+backend/build/
+backend/dist/
+
+# Frontend
+frontend/node_modules/
+frontend/.pnp
+frontend/.pnp.js
+frontend/build/
+frontend/dist/
+frontend/coverage/
+
+# Data (large files not needed in image)
+data/
+models/
+logs/
+
+# IDE
+.vscode/
+.idea
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
+
+# Misc
+.DS_Store
+shared_volume/
+weaviate_data/
+
+# Environment
+.env
+.env.local
+.env.*.local

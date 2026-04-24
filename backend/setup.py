@@ -1,0 +1,31 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="decision-intelligence-assistant",
+    version="0.1.0",
+    description="Decision Intelligence Assistant with RAG, ML baseline, and LLM comparison",
+    packages=find_packages(),
+    python_requires=">=3.11",
+    install_requires=[
+        "fastapi>=0.110.0",
+        "uvicorn[standard]>=0.29.0",
+        "weaviate-client>=4.6.0",
+        "sentence-transformers>=2.3.0",
+        "groq>=0.8.0",
+        "scikit-learn>=1.4.0",
+        "pandas>=2.2.0",
+        "numpy>=1.26.0",
+        "pydantic>=2.6.0",
+        "pydantic-settings>=2.2.0",
+        "python-dotenv>=1.0.0",
+        "httpx>=0.27.0",
+        "loguru>=0.7.0",
+        "nltk>=3.8.0",
+        "vaderSentiment>=3.3.2",
+        "textstat>=0.7.3",
+        "joblib>=1.3.0",
+        "transformers>=4.37.0",
+        "torch>=2.2.0",
+        "tqdm>=4.66.0",
+    ],
+)

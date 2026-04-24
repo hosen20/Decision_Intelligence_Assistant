@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  weaviate:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.27.6
+    hostname: weaviate
+    ports:
+      - "8081:8080"
+      - "50052:50051"
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+    environment:
+      QUERY_DEFAULTS_LIMIT: 20
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      DEFAULT_VECTORIZER_MODULE: "none"
+      ENABLE_MODULES: ""
+      CLUSTER_HOSTNAME: "weaviate"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/v1/.well-known/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    volumes:
+      - ./backend:/app
+      - ./models:/app/models
+      - ./logs:/app/logs
+      - ./shared_volume:/app/shared_volume
+    env_file:
+      - .env
+    environment:
+      - WEAVIATE_URL=http://weaviate:8080
+      - WEAVIATE_CLASS_NAME=${WEAVIATE_CLASS_NAME:-SupportTicket}
+      - ML_MODEL_PATH=/app/models/ml_model.pkl
+      - TOP_K=${TOP_K:-5}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - LOG_FILE=/app/logs/app.log
+      - CORS_ORIGINS=["http://frontend:3000","http://localhost:3000"]
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+    ports:
+      - "8003:8000"
+    depends_on:
+      weaviate:
+        condition: service_healthy
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+volumes:
+  weaviate_data:
+    name: weaviate_data
+
+networks:
+  app-network:
+    driver: bridge
+    name: decision-intelligence-network

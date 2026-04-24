@@ -1,0 +1,44 @@
+[project]
+name = "decision-intelligence-assistant"
+version = "0.1.0"
+description = "Decision Intelligence Assistant with RAG, ML baseline, and LLM comparison"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.29.0",
+    "weaviate-client>=4.6.0",
+    "sentence-transformers>=2.3.0",
+    "groq>=0.8.0",
+    "scikit-learn>=1.4.0",
+    "pandas>=2.2.0",
+    "numpy>=1.26.0",
+    "pydantic>=2.6.0",
+    "pydantic-settings>=2.2.0",
+    "python-dotenv>=1.0.0",
+    "httpx>=0.27.0",
+    "loguru>=0.7.0",
+    "nltk>=3.8.0",
+    "vaderSentiment>=3.3.2",
+    "textstat>=0.7.3",
+    "joblib>=1.3.0",
+    "transformers>=4.37.0",
+    "torch>=2.2.0",
+    "tqdm>=4.66.0",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29.0",
+    "jupyter>=1.0.0",
+    "matplotlib>=3.8.0",
+    "seaborn>=0.13.0",
+    "plotly>=5.18.0",
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "black>=24.0.0",
+    "ruff>=0.3.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
