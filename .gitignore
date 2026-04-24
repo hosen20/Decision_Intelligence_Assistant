@@ -80,7 +80,6 @@ shared_volume/
 
 # Jupyter
 .ipynb_checkpoints/
-*.ipynb
 
 # Misc
 *.db
